@@ -64,7 +64,7 @@ def group_by_user(records: Generator[Tuple[int, int, float, int], None, None]):
         yield uid, (iid, rating, time)
 
 if __name__ == '__main__':
-    f = open('/workspace/ml-1m/ratings.dat', 'r')
+    f = open('../ml-1m/ratings.dat', 'r')
     reader = csv.reader(f, delimiter=':')
     next(reader)
     sorted_interactions = sorted([
@@ -81,7 +81,7 @@ if __name__ == '__main__':
     print(f'User count: {user_count}')
     print(f'Item count: {item_count}')
     print(f'Record count: {record_count}')
-    with open(f'{data_dir}/meta.json', 'w') as f:
+    with open(f'data/{data_dir}/meta.json', 'w') as f:
         json.dump({
             'user': {
                 'count': user_count,
@@ -109,14 +109,14 @@ if __name__ == '__main__':
         for u, record in tqdm.tqdm(data_ui.items(), total=len(data_ui))
     }
 
-    with open(f'{data_dir}/train.txt', 'w') as f:
+    with open(f'data/{data_dir}/train.txt', 'w') as f:
         for u, records in train.items():
             f.write(' '.join(map(str, [u, *records])) + '\n')
-    with open(f'{data_dir}/test.txt', 'w') as f:
+    with open(f'data/{data_dir}/test.txt', 'w') as f:
         for u, records in test.items():
             f.write(' '.join(map(str, [u, *records])) + '\n')
 
-    with open(f'{data_dir}/train.json', 'w') as f:
+    with open(f'data/{data_dir}/train.json', 'w') as f:
         json.dump(train, f)
-    with open(f'{data_dir}/test.json', 'w') as f:
+    with open(f'data/{data_dir}/test.json', 'w') as f:
         json.dump(test, f)
